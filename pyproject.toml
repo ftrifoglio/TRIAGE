@@ -1,0 +1,49 @@
+[project]
+name = "triage"
+version = "0.1.0"
+description = "TRIAGE: TRIple-partitioned Adaptive Graph Embedding for tail-aware graph collaborative filtering."
+readme = "README.md"
+authors = [
+    { name = "Federico Trifoglio", email = "federico.trifoglio@gmail.com" }
+]
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.13"
+
+dependencies = [
+    "numpy>=2.0",
+    "pandas>=3.0.2",
+    "pyyaml>=6.0",
+    "scikit-learn>=1.9.0",
+    "scipy>=1.13",
+    "torch>=2.7",
+]
+
+[project.optional-dependencies]
+data = ["kaggle>=2.1.0", "python-dateutil<3"]
+
+[build-system]
+requires = ["uv_build>=0.11.7,<0.12"]
+build-backend = "uv_build"
+
+[tool.uv]
+package = true
+
+[tool.uv.build-backend]
+module-name = ["triage", "baselines", "common"]
+module-root = "src"
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cu128" }]
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.lint]
+select = ['ANN', 'D', 'F401', 'E501', 'TID251']
+ignore = ['D105', 'D107', 'D203', 'D212', 'ANN202', 'ANN002', 'ANN003']
