@@ -1,0 +1,67 @@
+[1/5] download raw data
+  downloading https://snap.stanford.edu/data/loc-gowalla_totalCheckins.txt.gz
+  -> /home/federicotrifoglio/Projects/MSc-Artificial-Intelligence/dissertation/TRIAGE/datasets/gowalla/triage_splits/loc-gowalla_totalCheckins.txt.gz
+  HTTP/1.1 200 OK
+Date: Sat, 14 Nov 2026 12:26:02 GMT
+Server: Apache
+Last-Modified: Tue, 26 Jul 2011 05:54:30 GMT
+ETag: "2aa0690-649585c-4a8f290b25180"
+Accept-Ranges: bytes
+Content-Length: 105470044
+Connection: close
+Content-Type: application/x-gzip
+
+  done (105.5 MB)
+
+[2/5] load raw
+raw check-ins          :  6,442,892 interactions  (107,092 users, 1,280,969 items)
+  timestamp range: 2009-02-04 05:17:38+00:00 -> 2010-10-23 05:22:06+00:00
+
+[3/5] dedupe
+after dedupe           :  3,981,334 interactions  (107,092 users, 1,280,969 items)
+
+[4/5] 10-core
+  iter  0:  1,339,108 interactions  (65,253 users, 57,445 items)
+  iter  1:  1,174,010 interactions  (34,796 users, 54,671 items)
+  iter  2:  1,090,400 interactions  (34,158 users, 44,370 items)
+  iter  3:  1,064,843 interactions  (31,255 users, 44,021 items)
+  iter  4:  1,047,467 interactions  (31,147 users, 42,069 items)
+  iter  5:  1,040,489 interactions  (30,379 users, 41,999 items)
+  iter  6:  1,035,097 interactions  (30,347 users, 41,400 items)
+  iter  7:  1,032,424 interactions  (30,051 users, 41,373 items)
+  iter  8:  1,030,383 interactions  (30,038 users, 41,145 items)
+  iter  9:  1,029,389 interactions  (29,928 users, 41,137 items)
+  iter 10:  1,028,665 interactions  (29,924 users, 41,059 items)
+  iter 11:  1,028,355 interactions  (29,895 users, 41,052 items)
+  iter 12:  1,028,010 interactions  (29,887 users, 41,020 items)
+  iter 13:  1,027,851 interactions  (29,874 users, 41,015 items)
+  iter 14:  1,027,680 interactions  (29,870 users, 41,000 items)
+  iter 15:  1,027,563 interactions  (29,861 users, 40,996 items)
+  iter 16:  1,027,491 interactions  (29,860 users, 40,989 items)
+  iter 17:  1,027,473 interactions  (29,858 users, 40,989 items)
+  iter 18:  1,027,464 interactions  (29,858 users, 40,988 items)
+  iter 19:  1,027,464 interactions  (29,858 users, 40,988 items)
+
+final vs expected:
+               expected       ours
+users            29,858     29,858
+items            40,981     40,988
+interactions  1,027,370  1,027,464
+density         0.0840%    0.0840%
+
+recall / precision vs ngcf_splits:
+  users : recall=1.0000  precision=1.0000  (hit=    29,858  ref=    29,858  ours=    29,858)
+  items : recall=1.0000  precision=0.9998  (hit=    40,981  ref=    40,981  ours=    40,988)
+  edges : recall=1.0000  precision=0.9999  (hit= 1,027,370  ref= 1,027,370  ours= 1,027,464)
+
+[5/5] save adjacency lists
+  wrote user_list.txt, item_list.txt, train.txt, test.txt -> /home/federicotrifoglio/Projects/MSc-Artificial-Intelligence/dissertation/TRIAGE/datasets/gowalla/triage_splits
+
+test-split parity vs ngcf_splits:
+  test edges : recall=1.0000  precision=0.9996  (hit=   217,242  ref=   217,242  ours=   217,336)
+
+recall-miss diagnostic vs ngcf_splits (test_ratio=0.2):
+  reference test edges we miss (in train)      :          0
+  tie-recoverable (share train boundary ts)    :          0  (0.0%)
+  core-surplus (user item set differs)         :          0  (0.0%)
+  order-divergence (same item set, diff order) :          0  (0.0%)
