@@ -1,0 +1,51 @@
+[1/5] download raw data
+  kaggle download yelp-dataset/yelp-dataset/7 :: yelp_academic_dataset_review.json
+  -> /home/federicotrifoglio/Projects/MSc-Artificial-Intelligence/dissertation/TRIAGE/datasets/yelp_2018/triage_splits
+Dataset URL: https://www.kaggle.com/datasets/yelp-dataset/yelp-dataset/versions/7
+
+[2/5] load raw
+raw reviews            :  5,996,996 interactions  (1,518,169 users, 188,593 items)
+  timestamp range: 2004-10-12 00:00:00 -> 2018-07-02 00:00:00
+
+[3/5] dedupe + (20, 10)-core
+after dedupe           :  5,996,993 interactions  (1,518,169 users, 188,593 items)
+
+[4/5] (20, 10)-core
+  iter  0:  1,984,587 interactions  (42,218 users, 86,709 items)
+  iter  1:  1,722,586 interactions  (38,670 users, 42,739 items)
+  iter  2:  1,610,003 interactions  (32,767 users, 41,293 items)
+  iter  3:  1,582,752 interactions  (32,458 users, 38,737 items)
+  iter  4:  1,569,515 interactions  (31,830 users, 38,569 items)
+  iter  5:  1,565,670 interactions  (31,794 users, 38,214 items)
+  iter  6:  1,563,504 interactions  (31,690 users, 38,192 items)
+  iter  7:  1,562,843 interactions  (31,685 users, 38,129 items)
+  iter  8:  1,562,606 interactions  (31,673 users, 38,128 items)
+  iter  9:  1,562,552 interactions  (31,673 users, 38,122 items)
+  iter 10:  1,562,495 interactions  (31,670 users, 38,122 items)
+  iter 11:  1,562,468 interactions  (31,670 users, 38,119 items)
+  iter 12:  1,562,430 interactions  (31,668 users, 38,119 items)
+  iter 13:  1,562,430 interactions  (31,668 users, 38,119 items)
+
+final vs expected:
+               expected       ours
+users            31,668     31,668
+items            38,048     38,119
+interactions  1,561,406  1,562,430
+density         0.1296%    0.1294%
+
+recall / precision vs lightgcn_splits:
+  users : recall=1.0000  precision=1.0000  (hit=    31,668  ref=    31,668  ours=    31,668)
+  items : recall=1.0000  precision=0.9981  (hit=    38,048  ref=    38,048  ours=    38,119)
+  edges : recall=1.0000  precision=0.9993  (hit= 1,561,406  ref= 1,561,406  ours= 1,562,430)
+
+[5/5] save adjacency lists
+  wrote user_list.txt, item_list.txt, train.txt, test.txt -> /home/federicotrifoglio/Projects/MSc-Artificial-Intelligence/dissertation/TRIAGE/datasets/yelp_2018/triage_splits
+
+test-split parity vs lightgcn_splits:
+  test edges : recall=0.9717  precision=0.9686  (hit=   314,967  ref=   324,147  ours=   325,171)
+
+recall-miss diagnostic vs lightgcn_splits (test_ratio=0.2):
+  reference test edges we miss (in train)      :      9,180
+  tie-recoverable (share train boundary ts)    :      9,180  (100.0%)
+  core-surplus (user item set differs)         :          0  (0.0%)
+  order-divergence (same item set, diff order) :          0  (0.0%)

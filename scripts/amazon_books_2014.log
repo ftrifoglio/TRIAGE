@@ -1,0 +1,66 @@
+[1/5] download raw data
+  downloading https://snap.stanford.edu/data/amazon/productGraph/categoryFiles/ratings_Books.csv
+  -> /home/federicotrifoglio/Projects/MSc-Artificial-Intelligence/dissertation/TRIAGE/datasets/amazon_books_2014/triage_splits/ratings_Books.csv
+  HTTP/1.1 200 OK
+Date: Sun, 14 Jun 2026 12:27:05 GMT
+Server: Apache
+Last-Modified: Wed, 27 Apr 2016 18:37:51 GMT
+ETag: "3d98a873-369d0214-5317bb5007dc0"
+Accept-Ranges: bytes
+Content-Length: 916259348
+Connection: close
+Content-Type: text/csv
+
+  done (916.3 MB)
+
+[2/5] load raw
+raw reviews            : 22,507,155 interactions  (8,026,324 users, 2,330,066 items)
+  timestamp range: 1996-05-20 00:00:00 -> 2014-07-23 00:00:00
+
+[3/5] dedupe
+after dedupe           : 22,507,155 interactions  (8,026,324 users, 2,330,066 items)
+
+[4/5] (20, 10)-core
+  iter  0:  4,828,655 interactions  (105,778 users, 356,263 items)
+  iter  1:  3,626,131 interactions  (78,727 users, 121,256 items)
+  iter  2:  3,246,632 interactions  (58,404 users, 109,992 items)
+  iter  3:  3,113,683 interactions  (56,432 users, 97,529 items)
+  iter  4:  3,054,088 interactions  (53,855 users, 95,966 items)
+  iter  5:  3,028,534 interactions  (53,498 users, 93,765 items)
+  iter  6:  3,015,953 interactions  (52,972 users, 93,440 items)
+  iter  7:  3,009,886 interactions  (52,886 users, 92,942 items)
+  iter  8:  3,006,384 interactions  (52,737 users, 92,852 items)
+  iter  9:  3,004,575 interactions  (52,720 users, 92,681 items)
+  iter 10:  3,003,465 interactions  (52,670 users, 92,663 items)
+  iter 11:  3,002,891 interactions  (52,663 users, 92,614 items)
+  iter 12:  3,002,527 interactions  (52,650 users, 92,601 items)
+  iter 13:  3,002,393 interactions  (52,650 users, 92,586 items)
+  iter 14:  3,002,317 interactions  (52,646 users, 92,586 items)
+  iter 15:  3,002,254 interactions  (52,646 users, 92,579 items)
+  iter 16:  3,002,197 interactions  (52,643 users, 92,579 items)
+  iter 17:  3,002,188 interactions  (52,643 users, 92,578 items)
+  iter 18:  3,002,188 interactions  (52,643 users, 92,578 items)
+
+final vs expected:
+               expected       ours
+users            52,643     52,643
+items            91,599     92,578
+interactions  2,984,108  3,002,188
+density         0.0619%    0.0616%
+
+recall / precision vs ngcf_splits:
+  users : recall=1.0000  precision=1.0000  (hit=    52,643  ref=    52,643  ours=    52,643)
+  items : recall=1.0000  precision=0.9894  (hit=    91,599  ref=    91,599  ours=    92,578)
+  edges : recall=1.0000  precision=0.9940  (hit= 2,984,108  ref= 2,984,108  ours= 3,002,188)
+
+[5/5] save adjacency lists
+  wrote user_list.txt, item_list.txt, train.txt, test.txt -> /home/federicotrifoglio/Projects/MSc-Artificial-Intelligence/dissertation/TRIAGE/datasets/amazon_books_2014/triage_splits
+
+test-split parity vs ngcf_splits:
+  test edges : recall=0.9519  precision=0.9242  (hit=   574,370  ref=   603,378  ours=   621,458)
+
+recall-miss diagnostic vs ngcf_splits (test_ratio=0.2):
+  reference test edges we miss (in train)      :     29,008
+  tie-recoverable (share train boundary ts)    :        303  (1.0%)
+  core-surplus (user item set differs)         :      4,421  (15.2%)
+  order-divergence (same item set, diff order) :     24,284  (83.7%)
